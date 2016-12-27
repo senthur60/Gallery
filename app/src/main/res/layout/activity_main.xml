@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:id="@+id/container"
+    tools:context="com.example.senthur_4695.gallery.MainActivity">
+<ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/hidimg"
+    />
+<LinearLayout
+    android:background="@color/black"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="0dp"
+            android:id="@+id/img1"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:src="@drawable/img1"
+            android:transitionName="sharedImage"
+
+            />
+        <ImageView android:layout_width="0dp"
+            android:id="@+id/img2"
+            android:layout_height="100dp"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:layout_weight=".50"
+            android:src="@drawable/img2"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="0dp"
+            android:id="@+id/img3"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:src="@drawable/img3"
+            />
+        <ImageView android:layout_width="0dp"
+            android:id="@+id/img4"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:src="@drawable/img4"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="0dp"
+            android:id="@+id/img5"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:src="@drawable/img5"
+            />
+        <ImageView android:layout_width="0dp"
+        android:layout_height="100dp"
+            android:id="@+id/img6"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:layout_weight=".50"
+        android:src="@drawable/img6"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img7"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:src="@drawable/img7"
+            />
+        <ImageView android:layout_width="0dp"
+            android:id="@+id/img8"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:src="@drawable/img8"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="0dp"
+            android:id="@+id/img9"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:src="@drawable/img9"
+            />
+        <ImageView android:layout_width="0dp"
+            android:id="@+id/img10"
+            android:layout_height="100dp"
+            android:layout_weight=".50"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:src="@drawable/img10"/>
+
+
+
+    </LinearLayout>
+</LinearLayout>
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="@color/opblack"
+        android:contentDescription="Sample Image" />
+</FrameLayout>
+
