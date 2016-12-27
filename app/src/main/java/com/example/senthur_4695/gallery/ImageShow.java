@@ -109,10 +109,11 @@ public class ImageShow extends Activity {
         tv.setAnimation(animation);*/
 
 
+
         /**
-         *
+         *Fade out
          */
-        Animation fadeOut = new AlphaAnimation(0, 1);
+/*        Animation fadeOut = new AlphaAnimation(1, 0);
         fadeOut.setInterpolator(new AccelerateInterpolator());
         fadeOut.setDuration(5000);
 
@@ -126,7 +127,43 @@ public class ImageShow extends Activity {
             public void onAnimationStart(Animation animation) {}
         });
 
-        imageShow.startAnimation(fadeOut);
+        imageShow.startAnimation(fadeOut);*/
+
+        /**
+         *Fade in
+         */
+       /* Animation fadeOut = new AlphaAnimation(0, 1);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setDuration(5000);
+
+        fadeOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            public void onAnimationEnd(Animation animation)
+            {
+                //imageShow.setVisibility(View.GONE);
+            }
+            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationStart(Animation animation) {}
+        });
+
+        imageShow.startAnimation(fadeOut);*/
+        /**
+        * Flip in object
+        */
+        Animation fadein = new AlphaAnimation(0, 1);
+        fadein.setInterpolator(new AccelerateInterpolator());
+        fadein.setDuration(3000);
+        imageShow.startAnimation(fadein);
+        float scale = getResources().getDisplayMetrics().density;
+        imageShow.setCameraDistance(4000 * scale);
+        ObjectAnimator ob= ObjectAnimator.ofFloat(imageShow,"rotationY",0f,360f);
+        ob.setDuration(3000);
+        //ObjectAnimator fadeIn = ObjectAnimator.ofInt(imageShow, "alpha",0, 255);
+        AnimatorSet animatorSet = new AnimatorSet();
+
+         animatorSet.play(ob);
+        animatorSet.start();
+
     }
 
 }
