@@ -8,10 +8,16 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Path;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -31,6 +37,9 @@ public class ImageShow extends Activity {
 
     ImageView imageShow;
     TextView tv;
+    ImageView mTopImage;
+    ImageView mBottomImage;
+    Bitmap mBmp1,mBmp2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -331,6 +340,147 @@ imageShow.setAnimation(animation);
                         imageShow.setVisibility(View.GONE);
                     }
                 });*/
+        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.test);
+//      imageShow.startAnimation(animation);
+/**
+ * Wisp out animation
+ */
+      /*  ObjectAnimator mover = ObjectAnimator.ofFloat(imageShow,
+                "translationX", 0, 500);
+        mover.setDuration(1000);
+        ObjectAnimator mover2 = ObjectAnimator.ofFloat(imageShow,
+                "translationX",500, 0);
+        mover2.setDuration(1000);
+        ObjectAnimator aph = ObjectAnimator.ofFloat(imageShow,
+                "alpha", 1, 0);
+        aph.setDuration(800);
+        ObjectAnimator scalex = ObjectAnimator.ofFloat(imageShow,
+                "scaleX", 1, 0);
+        scalex.setDuration(1000);
+        ObjectAnimator scaley = ObjectAnimator.ofFloat(imageShow,
+                "scaleY", 1, 0);
+        scaley.setDuration(1000);
+        AnimatorSet s=new AnimatorSet();
+
+        s.play(aph).with(scalex).with(scaley).with(mover2).after(mover);
+
+
+        s.start();*/
+        /**
+         * Wisp in Animation
+         */
+/*
+        ObjectAnimator mover = ObjectAnimator.ofFloat(imageShow,
+                "translationX", 0, 500);
+        mover.setDuration(1000);
+        ObjectAnimator mover2 = ObjectAnimator.ofFloat(imageShow,
+                "translationX",500, 0);
+        mover2.setDuration(1000);
+        ObjectAnimator aph = ObjectAnimator.ofFloat(imageShow,
+                "alpha", 0, 1);
+        aph.setDuration(1000);
+        ObjectAnimator scalex = ObjectAnimator.ofFloat(imageShow,
+                "scaleX", 0, 1);
+        scalex.setDuration(1000);
+        ObjectAnimator scaley = ObjectAnimator.ofFloat(imageShow,
+                "scaleY", 0, 1);
+        scaley.setDuration(1000);
+        AnimatorSet s=new AnimatorSet();
+
+        s.play(aph).with(scalex).with(scaley).with(mover).before(mover2);
+
+
+        s.start();*/
+        final Activity qa=this;
+        imageShow.setDrawingCacheEnabled(true);
+
+
+        Bitmap bmp = ((BitmapDrawable) imageShow.getDrawable()).getBitmap();;
+        int splitYCoord =  bmp.getHeight() / 2;
+        if (splitYCoord > bmp.getHeight())
+            throw new IllegalArgumentException("Split Y coordinate [" + splitYCoord + "] exceeds the activity's height [" + bmp.getHeight() + "]");
+        mBmp1 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), splitYCoord);
+        mBmp2 = Bitmap.createBitmap(bmp, 0, splitYCoord, bmp.getWidth(), bmp.getHeight() - splitYCoord);
+          int[] mLoc1;
+         int[] mLoc2;
+        mLoc1 = new int[]{0, imageShow.getTop()};
+        mLoc2 = new int[]{0, imageShow.getTop() + splitYCoord};
+
+        mTopImage = createImageView(this, mBmp1, mLoc1);
+        mBottomImage = createImageView(this, mBmp2, mLoc2);
+
+
+    AnimatorSet mSetAnim = new AnimatorSet();
+    mTopImage.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+    mBottomImage.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+    mSetAnim.addListener(new Animator.AnimatorListener() {
+        @Override
+        public void onAnimationStart(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            clean(qa);
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+            clean(qa);
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
+        }
+    });
+
+    Animator anim1 = ObjectAnimator.ofFloat(mTopImage, "translationY", mTopImage.getHeight() * -1);
+    Animator anim2 = ObjectAnimator.ofFloat(mBottomImage, "translationY", mBottomImage.getHeight());
+    anim1.setDuration(4000);
+        anim2.setDuration(4000);
+    mSetAnim.setDuration(4000);
+    mSetAnim.playTogether(anim1, anim2);
+    mSetAnim.start();
+
+
+
+
+    }
+    private void clean(Activity activity) {
+        if (mTopImage != null) {
+            mTopImage.setLayerType(View.LAYER_TYPE_NONE, null);
+            try {
+                activity.getWindowManager().removeViewImmediate(mBottomImage);
+            } catch (Exception ignored) {}
+        }
+        if (mBottomImage != null) {
+            mBottomImage.setLayerType(View.LAYER_TYPE_NONE, null);
+            try {
+                activity.getWindowManager().removeViewImmediate(mTopImage);
+            } catch (Exception ignored) {}
+        }
+
+        mBmp1 = null;
+        mBmp2 = null;
+    }
+      ImageView createImageView(Activity destActivity, Bitmap bmp, int loc[]) {
+        ImageView imageView = new ImageView(destActivity);
+        imageView.setImageBitmap(bmp);
+
+        WindowManager.LayoutParams windowParams = new WindowManager.LayoutParams();
+        windowParams.gravity = Gravity.CENTER;
+        windowParams.x = loc[0];
+        windowParams.y = loc[1];
+        windowParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        windowParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+        windowParams.flags =
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        windowParams.format = PixelFormat.TRANSLUCENT;
+        windowParams.windowAnimations = 0;
+        destActivity.getWindowManager().addView(imageView, windowParams);
+
+        return imageView;
     }
 
 }
